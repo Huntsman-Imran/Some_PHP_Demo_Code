@@ -1,0 +1,19 @@
+1. ctrl+;=to show grids
+
+2. ctrl+alt+c=to show canvas size (N.B: From here we can find the height and width of image) 
+
+3. (1. select circle by pressing ->shift+mouse 2. press only arrow to place the circle in exact place 3.to copy the selected area place ->shift+control+c=copy marge) .(tutotil-three cutting cirlce part)
+
+4. for alignment to component or text ->first select two compontent then press(move tool) and by pressing different option like align-vertical align-center you can align to component like text image .
+
+5. to move a text or image ->first click shift then by pressing arrow you can move text or image .
+
+6. to clip a image to a layer ->first selet the image press right button and then a pop up window will appear then click ( create clipping mask option ) . 
+
+7. to marge more then one layer you can select all those layer and press right button of the mouse then a pop up window will appear then press marge layer option.
+
+8. to copy an effect from component or text -> first selet the compontent or text then  press ctrl+alt and dragg that effect to specific compontent you want 
+
+9. to cut an image we have to create a layer above it then we have to select both of them then we have to marge them by pressing ctrl+alt+e(NB: if we marge layer clicking option of opup window then the roriginal layer will converterted but in this process the origianal copy will remain original ) then we have to select all by clicking ctrl+a then we have to cut the imege by pressing ctrl+x then we have to past it into another file ; second step->to add another photo like this we have to follow the same procedure i have illustrated above and then we have to go to the page we want to add then we have to press ctrl+alt+c then by configuring the canvas by clicking relative then specifing the direction we can increase the size of window then by pressing ctrl+v we can past the image 
+
+11. to find the size of imge we can pop up can vas window by clicking the ctrl+alt+c ,From here we can find the height and width of image  

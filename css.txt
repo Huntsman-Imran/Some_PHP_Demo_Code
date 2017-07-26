@@ -1,0 +1,175 @@
+/*************to connecting fonts************/
+
+@font-face{
+    font-family: 'Museo';
+    scr: url('fonts/Museo-700.otf');
+}
+
+
+/*************to remove the last horizontal child*************/
+
+.categories .cat:last-of-type ~ hr
+{
+	display: none;
+}
+
+/*************transition of button*************/
+.categories .cat:hover .hidden-buttons
+{
+    right: 10px;
+}
+.categories .cat .hidden-buttons
+{
+	-webkit-transition:all 0.5s ease-in-out;
+	-moz-transition:all 0.5s ease-in-out;
+	transition:all 0.5s ease-in-out;
+	position: absolute;
+	top: 20px;
+    right: -120px;
+}
+
+
+/****************placing text in a bolock side by side**********/
+.latest .comment-box
+{
+ margin: 5px 0 10px;
+}
+.latest .comment-box .comment-m,
+.latest .comment-box .comment-c
+{
+ float: left;
+}
+.latest .comment-box .comment-m
+{
+	width: 80px;
+	margin-right: 20px;
+	text-align: center;
+}
+.latest .comment-box .comment-c
+{
+	width: calc(100% - 100px);
+	background: #EEE;
+	padding: 10px;
+}
+
+/*****************placing triangle in comment*************/
+
+.latest .comment-box .comment-c
+{
+	margin-top: 4px;
+	width: calc(100% - 100px);
+	background: #EEE;
+	padding: 10px;
+	position: relative; //importent note :eta reative dia before er parte position absolute dite hobe jodi triangle comment er upor rakhtechi
+}
+ .latest .comment-box .comment-c:before
+{
+	content: "";
+	display: block;
+	position: absolute;
+	left: 0px;
+	top: 5px;
+	width: 0;
+	height: 0;
+	border-style:solid;
+	border-width: 15px;
+	border-color: transparent red transparent transparent;
+}
+
+
+
+/*******************************for placing deatails side by side like frontend items.php pages description of items**********************************************************/
+.item-info ul li span
+{
+	display: inline-block;
+	width: 120px;
+}
+
+
+/*****to show some box shadow*****/
+
+.btn
+{
+    font-weight: bold;  
+    background: #9a9c9f;
+    color: #fff;
+    border-radius: 3px;
+    border: 1px solid rgba(0,0,0,0.2); /*inner glow in photo shop*/
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.50);/*inner shadow*/
+    text-shadow:none;
+
+}
+
+/*****to show process icon of phd ro html tutorial*****/
+
+ .pocss-icon
+ {
+    display: inline-block;
+    height: 107px;
+    width: 105px;
+    background: transparent url(../img/process-sprit.PNG);
+    background-position: left top;
+ }
+.pocss-icon.idesign
+ {
+    background-position: -105px top;
+ }
+.pocss-icon.idevelop
+ {
+    background-position: -210px top;
+ }
+.pocss-icon.ilounch //eikhane monerakhtehbe je class dutar majhe kono gap na thake
+ {
+    background-position: -316px top;
+ }
+
+
+
+
+
+/*******styleing carosul******/
+
+ .carousel-control .glyphicon-chevron-right,
+.carousel-control .glyphicon-chevron-left
+{
+    font-size: 32px; //size of arrow
+    width: 30px;     //width of background
+    height: 60px;    //height of background
+    line-height: 55px; //positioning of arrow
+    background: #000; 
+    opacity: 0.7;
+}
+.carousel-control.left {
+    background-image: none;
+}
+.carousel-control.right {
+    background-image: none;
+}
+.carousel-control .glyphicon-chevron-right, .carousel-control .icon-next {
+    margin-right: -150px;   //placement of arrow
+
+}
+.carousel-control .glyphicon-chevron-left, .carousel-control .icon-prev {
+    margin-left: -150px;
+
+}
+
+
+/*********image ke responsive korte hole class="center-block img-responsive" likhte hobe*********/   important
+
+<img class="center-block img-responsive" src="img/browser.png" alt="">
+
+
+/*********size choto korle nicher prokriae item gula manage korte hobe*********/   important
+
+ @media (max-width: 767px) {
+    .jumbotron .item
+    {
+        padding: 0 40px;
+    }
+    .plane,.lounch,.design,.develop,.blog,.tweet,.testimonial,.p-item
+    {
+        margin-bottom: 40px;padding: 0 40px;
+    }
+
+}

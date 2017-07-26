@@ -1,0 +1,264 @@
+ /*page ke login e redirect korte*/
+<?  ob_start();session_start(); ?> <!-- eiline e php tag suru hower age ekta spaceo thaktheparbene evong arekta error  theke rokha patehole ob_start() age likhtehobe -->
+<?php 
+
+if($_SESSION['name']!='admin')
+{
+header('location: login.php');
+}
+?>
+
+/***************php function******************/
+ str_replace(' ','-',$row['name'])
+
+/********is_numeric()******************/
+$userid= isset($_GET['userid'])  &&  is_numeric($_GET['userid'])  ?  intval($_GET['userid'])  :  0;
+
+/********************gravatar check of image************/
+
+$gravatarmd5=md5($row['co_email']);
+   <img src="http://www.gravater.com/<?echo $gravatarmd5; ?>" alt="" width="80" height="80"/><br/>
+//milie nite hobe
+    if(md5($row['co_email']))
+      {
+      ?>
+       <img src="images/imran.JPG" alt="" width="80" height="80">           
+        <!--<img src="http://www.gravater.com/<?echo $gravatarmd5; ?>" alt="" width="80" height="80"/><br/>-->
+
+      <?
+      }
+     else
+     {
+      ?>
+          <img src="http://www.gravater.com/<?echo $gravatarmd5; ?>" alt="" width="80" height="80"/>
+      <?
+    }
+      ?>
+
+/********************by request variable deleting and updating form datbase************/
+
+//ai ongso ti o session er moto page er first e thakte hobe
+ if(!isset($_REQUEST['id']))
+ {
+   header('location: index.php');
+ }
+ else
+ {
+   $id=$_REQUEST['id'];
+ }
+
+
+           //alada part
+    if(isset($_REQUEST['id']))
+   {
+    $id=trim(preg_replace('#[^0-9]#i', '', $_REQUEST['id']));
+    $statement=$db->prepare("DELETE FROM tbl_category WHERE cat_id=? ") or die('there is an error');
+    $statement->execute(array($id));
+  $success_message2='Category name hasbeen deleted successfully';
+
+
+  }
+
+/******************** deleting form datbase using bindparam************/
+
+   $statement=$conn->prepare('DELETE FROM users WHERE user_id= :zuserid');
+            $statement->bindParam(':zuserid',$userid);
+            $statement->execute(); 
+
+
+   /********************way to send id to request************/
+   //1st process
+   <!--<input type="hidden" name="id" value="<? //echo $post_id; ?>">-->
+   //2nd process
+   <!--<form action=edit-post?id=<?//echo $id;?>" method="post">-->
+   //3rd process
+   <!--<a  href="manage-tags.php?id=<?//echo $row['tag_id']?>" >Delete</a>-->
+
+
+
+/********************getting next auto increment value of a table****************/
+       $statement=$db->prepare("SHOW TABLE STATUS LIKE 'tbl_post'");  ////here this is importent for auto increment because when we delete a post this value may create problem in upload folder 
+       $statement->execute();
+       $result=$statement->fetchAll();
+       foreach ($result as $row)
+       {
+       $new_id=$row[10]; //
+       }
+      
+
+/********************getting differnt file information************/
+      $up_file_name=$_FILES['post_image']['name'];
+      $file_basename=substr($up_file_name, 0,strpos( $up_file_name,'.'));
+      $file_extention=substr($up_file_name, strpos( $up_file_name,'.'));
+      $file=strtotime(date('Y-m-d H:i:s')).$file_extention;         // eiline ta onek interseting ermadhme amra file er nam date er madhome define korte pari
+      $file=$new_id.$file_extention;//uporer line er poriborte  (getting next auto increment value of a table) ongser value use kore o amra $file variable er man use korte pari
+
+      move_uploaded_file($_FILES['post_image']['tmp_name'],'../upload/'.$file_extention);   //move upload file to a folder
+
+
+/********************when we select multiple tag from checkbox(implode)************/
+
+       $tag_id=$_POST['tag_id'];
+        $i=0;
+        if(is_array($tag_id))
+        {
+            foreach($tag_id as $key => $val) 
+            {
+              $arr[$i]=$val;
+             //echo $arr[$i];
+             $i++;
+            }
+      }
+
+
+      $tag_ids=implode(',', $arr);
+
+
+
+/******************count fist five word into string(implode & explode)***************************/
+       $pieces=explode(' ', $row['post_description']);
+       $final_word=implode(' ', array_splice($pieces,0, 200));
+       $final_word=implode(' ', array_splice($pieces, 200));
+       $final_word=$final_word.'.......';
+
+
+/********************another way to (implode)************/
+      $k=0;
+     $statement1=$db->prepare('SELECT * FROM tbl_category WHERE cat_id=?');
+     $statement1->execute(array($row['cat_id']));
+     $result1=$statement1->fetchAll(PDO::FETCH_ASSOC);
+     foreach ($result1 as $row1) 
+     {
+       $arr1[$K]=$row1['tag_name'];
+     }
+     $tag_names=implode(',', $arr1);
+     echo $tag_names;
+
+/********************(explode)************/
+
+ $k=0;
+ $arr=explode(',', $row['tag_id']);
+ //echo $arr[0];
+ //echo $arr[1];
+ $arr_count=count(explode(',', $row['tag_id']));
+ for($j=0;$j<$arr_count;$j++)
+     {
+      $statement1=$db->prepare('SELECT * FROM tbl_tag WHERE tag_id=?');
+      $statement1->execute(array($arr[$j]));
+      $result1=$statement1->fetchAll(PDO::FETCH_ASSOC);
+      foreach ($result1 as $row1)
+         {
+          $arr[$k]=$row1['tag_name'];
+         }
+       $k++;
+      
+     }
+  $tag_names=implode(',', $arr);
+  echo $tag_names;
+
+ /********************all about date************/
+ 
+ date_default_timezone_set('Asia/Dhaka');//setting timezone
+
+
+ $post_date=date('Y-m-d'); //gate todays date
+ $post_timestamp=strtotime($post_timestamp); //gate timestamp of todays date
+
+ /********************search************/
+
+    $statement=$db->prepare('SELECT * FROM tbl_login WHERE username=? AND password=?');
+    $statement->execute(array($_POST['username'],$password));
+    $num=$statement->rowCount();
+
+
+     $statement=$db->prepare('SELECT * FROM tbl_category ORDER BY cat_name ASC');
+     $statement->execute();
+     $result=$statement->fetchAll(PDO::FETCH_ASSOC);
+    foreach ($result as $row)
+     {
+     $i++;
+     }
+
+
+/********************insert into database************/
+
+     $statement=$db->prepare('INSERT INTO tbl_category  (cat_name) VALUE(?) ');
+      $statement->execute(array($_POST['cat_name']));
+
+      // another way
+        $statement=$conn->prepare('INSERT INTO users(username,password,email,full_name,date) VALUES(:zusername,:zpassword,:zemail,:zfull_name,now())');
+        $statement->execute(array(
+           'zusername'=>$username,
+           'zpassword'=>$password,
+           'zemail'=>$email,
+           'zfull_name'=>$full_name
+          ));
+
+
+/********************update database************/
+
+     $statement=$db->prepare('UPDATE tbl_category  SET cat_name=? WHERE cat_id=?');
+     $statement->execute(array($_POST['cat_name'],$_POST['hdn']));
+
+ 
+
+   /********************is there checking (checkbox is checked)************/ 
+    $is_there=0;
+   if($arr[$i]==$row['tag_id'])
+    {
+      $is_there=1;
+      break;
+    }
+    if($is_there==1)
+    {
+          <!--<input type="checkbox" name="tag_id[]" value="<?//echo $row['tag_id'];?>" checked>&nbsp;<?//echo $row['tag_name'];?><br>-->
+    }
+
+
+/******************deleting image/file from directory with same name and replacing with new one***************************/
+    $statement=$db->prepare('SELECT * FROM tbl_post WHERE post_id=?');
+    $statement->execute(array($id));
+    $result=$statement->fetchAll(PDO::FETCH_ASSOC);
+    foreach ($result as $row) 
+    {
+      $real_path='../upload/'.$row['post_image'];
+      unlink($real_path);
+    }
+     move_uploaded_file($_FILES['post_image']['tmp_name'],'../upload/'.$file);
+    }
+
+    /******************image input type***************************/
+
+    <input type="image" src="images/button.gif"  name="form1">
+
+
+    /*************two way of showing select itme in edit page**********************/
+
+     //first way
+    $statement1=$conn->prepare('SELECT * FROM users ORDER BY user_id ASC');
+    $statement1->execute();
+    $result1=$statement1->fetchAll();
+    foreach ($result1 as $row1) 
+    {
+     
+      echo '<option value="'.$row['user_id'].'" '; if($row['member_id']==$row1['user_id']){echo 'selected';} echo'>'.$row1['username'].'</option>';
+    
+    }
+
+
+    //second way
+     $statement1=$conn->prepare('SELECT * FROM categories ORDER BY id ASC');
+      $statement1->execute();
+      $result1=$statement1->fetchAll();
+      foreach ($result1 as $row1) 
+      {
+         if($row['cat_id']==$row1['id'])
+        {
+        echo '<option value="'.$row['cat_id'].'" selected>'.$row1['name'].'</option>';
+        }
+        else
+        {
+           echo '<option value="'.$row['user_id'].'">'.$row1['name'].'</option>'; 
+        }
+      }
+
